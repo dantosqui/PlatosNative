@@ -1,37 +1,18 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import PlatoCard from '../../components/PlatoCard/PlatoCard.jsx'
-import { View,Text,FlatList } from 'react-native';
+import PlatoCard from '../../components/PlatoCard/PlatoCard.jsx';
+import { View, FlatList, StyleSheet } from 'react-native';
+import BotonCircular from '../../components/BotonCircular/BotonCircular.jsx';
 
+const Home = ({navigation}) => {
+    const [platos, setPlatos] = useState([]);
 
-const Home = () => {
-    const [platos,setPlatos] = useState([])
+    useEffect(() => {
 
-useEffect(() => {
-  
-    const fetchDishes = async () => {
-        try {
-          const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch', {
-            params: {
-              apiKey: 'e796545d48bc41e584c5a6bacd421f72',
-              number: 10, // Número de resultados
-            },
-          });
-          setPlatos(response.data.results)
-        } catch (error) {
-          console.error('Error fetching dishes:', error);
-          throw error;
-        }
-      };
+    }, []);
 
-    fetchDishes();
-}, []);
-
-
-
-
-    return(
-        <View>
+    return (
+        <View style={styles.container}>
             <FlatList
                 data={platos}
                 keyExtractor={(item) => item.id.toString()}
@@ -39,10 +20,18 @@ useEffect(() => {
                     <PlatoCard title={item.title} image={item.image} />
                 )}
             />
-        
+
+            <BotonCircular onPress={() => navigation.navigate('Buscar')} />
         </View>
-    )
-}
+    );
+};
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 16, // Espaciado alrededor de la lista
+        backgroundColor: '#f5f5f5', // Color de fondo claro
+    },
+});
 
-export default Home
+export default Home;
