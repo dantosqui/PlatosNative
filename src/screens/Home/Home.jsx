@@ -3,13 +3,16 @@ import { useEffect, useState } from 'react';
 import PlatoCard from '../../components/PlatoCard/PlatoCard.jsx';
 import { View, FlatList, StyleSheet } from 'react-native';
 import BotonCircular from '../../components/BotonCircular/BotonCircular.jsx';
+import { useContext } from 'react';
+import { MenuContext } from '../../context/menuContext.js';
 
 const Home = ({navigation}) => {
-    const [platos, setPlatos] = useState([]);
 
-    useEffect(() => {
+    const { platos } = useContext(MenuContext);
+    console.log(platos)
+    /*useEffect(() => {
 
-    }, []);
+    }, []);*/
 
     return (
         <View style={styles.container}>
@@ -17,7 +20,11 @@ const Home = ({navigation}) => {
                 data={platos}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <PlatoCard title={item.title} image={item.image} />
+                    <TouchableOpacity 
+                        onPress={() => navigation.navigate('Detalle', { plato: item.id })} // Use an arrow function here
+                    >
+                        <PlatoCard title={item.title} image={item.image} />
+                    </TouchableOpacity>
                 )}
             />
 

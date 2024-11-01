@@ -10,8 +10,12 @@ export const MenuProvider = ({ children }) => {
         setPlatos([...platos, plato]);
     };
 
+    const sacarPlato = (id) => {
+        setPlatos(platos.filter(plato => plato.id !== id));
+    };
+
     return (
-        <MenuContext.Provider value={{ platos, categorias, addPlato }}>
+        <MenuContext.Provider value={{ platos, addPlato, sacarPlato }}>
             {children}
         </MenuContext.Provider>
     );

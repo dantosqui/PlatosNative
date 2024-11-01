@@ -44,7 +44,7 @@ const SearchPlato = ({navigation}) => {
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                     <TouchableOpacity 
-                        onPress={() => navigation.navigate('Detalle', { plato: item.id })} // Use an arrow function here
+                        onPress={() => navigation.navigate('Detalle', { platoId: item.id })} // Use an arrow function here
                     >
                         <PlatoCard title={item.title} image={item.image} />
                     </TouchableOpacity>
