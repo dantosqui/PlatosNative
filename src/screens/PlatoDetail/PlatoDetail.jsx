@@ -25,7 +25,7 @@ const PlatoDetail = ({platoId,navigation}) => {
             }
         }
         fetchInfo()
-    }, []);
+    }, [platoId]);
 
     const handleBorrar = () => {
         sacarPlato(infoPlato.id)
