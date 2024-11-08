@@ -8,7 +8,7 @@ import { useRoute } from '@react-navigation/native'; // Importar useRoute
 
 const PlatoDetail = ({navigation}) => {
     const [infoPlato,setInfoPlato] = useState({})
-    const { addPlato, sacarPlato,exists,maxPlatosReached } = useContext(MenuContext); 
+    const { addPlato, sacarPlato,exists,maxPlatosReached,veganPercentages } = useContext(MenuContext); 
     const { platoId }= useRoute().params;
 
     useEffect(() => {
@@ -40,7 +40,21 @@ const PlatoDetail = ({navigation}) => {
         addPlato(infoPlato)
         navigation.navigate('Home')
     }
-    
+    const canAñadirAlMenu = () => {//si ya hay 4 platos no se puede añadir, si hay ya 50 porciento de veganos y es vegano no se puede añadir y viseversa
+        console.log(veganPercentages)
+        if(!maxPlatosReached){
+            if(infoPlato.vegan){
+                if(veganPercentages.vegan<50){
+                    return true
+                }
+            }
+            else if (veganPercentages.nonVegan<50){
+                return true
+            }
+            else return false
+        }
+        else return false
+    }
     
 
     return(
@@ -52,8 +66,8 @@ const PlatoDetail = ({navigation}) => {
             {exists(infoPlato.id) ? (
                 <Button onPress={handleBorrar} title="Eliminar"></Button>
                 ):(
-                    <Button disabled={maxPlatosReached} onPress={handleAñadir} title="+"></Button>
-                    )
+                    <Button disabled={!canAñadirAlMenu()} onPress={handleAñadir} title="+"></Button>
+                )
             }
         </View>
     )
