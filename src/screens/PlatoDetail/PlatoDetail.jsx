@@ -3,13 +3,17 @@ import { Button, View, Image, Text } from "react-native"
 import { MenuContext } from "../../context/menuContext";
 import axios from "axios";
 import { API_KEY } from "../../constantes/constantes";
-const PlatoDetail = ({platoId,navigation}) => {
+import { useRoute } from '@react-navigation/native'; // Importar useRoute
+
+
+const PlatoDetail = ({navigation}) => {
     const [infoPlato,setInfoPlato] = useState({})
-    const { platos, addPlato, sacarPlato } = useContext(MenuContext); 
+    const { addPlato, sacarPlato,exists } = useContext(MenuContext); 
+    const { platoId }= useRoute().params;
 
     useEffect(() => {
         
-        
+        console.log(platoId)
         const fetchInfo = async () => {
             try{
                 const response = await axios.get(`https://api.spoonacular.com/recipes/${platoId}/information`,{
@@ -18,6 +22,7 @@ const PlatoDetail = ({platoId,navigation}) => {
                         apiKey:API_KEY
                     }
                 })
+                
                 setInfoPlato(response.data)
             }  catch (error){
                 console.error('error fecheando un plato: ',error)
@@ -36,24 +41,19 @@ const PlatoDetail = ({platoId,navigation}) => {
         navigation.navigate('Home')
     }
     
-    const exists = () => {
-        if (platos){
-            if (platos.indexOf(infoPlato)){
-                return true
-            }
-        }
-        return false
-    }
+    
 
     return(
         <View>
-            <Image source={{uri:infoPlato.image}}/>
+            <Image source={{ uri: infoPlato.image }}/>
+            <Text>{infoPlato.title}</Text>
             <Text>Puntaje de saludablebilidad: {infoPlato.healthScore}</Text>
             <Text>Es vegano🌿: {infoPlato.vegan ? ("Si") : ("No")} </Text>
-            {exists() ? (
-                <Button onPress={handleAñadir} title="+"></Button>
+            {exists(infoPlato.id) ? (
+                <Button onPress={handleBorrar} title="Eliminar"></Button>
                 ):(
-                <Button onPress={handleBorrar} title="Eliminar"></Button>)
+                    <Button onPress={handleAñadir} title="+"></Button>
+                    )
             }
         </View>
     )
