@@ -8,12 +8,12 @@ import { useRoute } from '@react-navigation/native'; // Importar useRoute
 
 const PlatoDetail = ({navigation}) => {
     const [infoPlato,setInfoPlato] = useState({})
-    const { addPlato, sacarPlato,exists } = useContext(MenuContext); 
+    const { addPlato, sacarPlato,exists,maxPlatosReached } = useContext(MenuContext); 
     const { platoId }= useRoute().params;
 
     useEffect(() => {
         
-        console.log(platoId)
+        
         const fetchInfo = async () => {
             try{
                 const response = await axios.get(`https://api.spoonacular.com/recipes/${platoId}/information`,{
@@ -52,7 +52,7 @@ const PlatoDetail = ({navigation}) => {
             {exists(infoPlato.id) ? (
                 <Button onPress={handleBorrar} title="Eliminar"></Button>
                 ):(
-                    <Button onPress={handleAñadir} title="+"></Button>
+                    <Button disabled={maxPlatosReached} onPress={handleAñadir} title="+"></Button>
                     )
             }
         </View>

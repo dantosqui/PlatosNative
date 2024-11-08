@@ -9,13 +9,16 @@ const SearchPlato = ({navigation}) => {
     const [searchResult, setSearchResult] = useState([]);
 
     const handleBuscar = async () => { // Traer los resultados cuando apretas buscar
+        if (query.length>2){ //si hay mas de dos caracteres...
+
+        
         try {
             const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch', { //importante saber que esto busca recipes, tambien se pueden buscar comidas 
                                                                                                     //de restaurntes
                 params: {
                     apiKey: API_KEY,
                     query: query,
-                    number: 25,
+                    number: 25
                 },
             });
             setSearchResult(response.data.results);
@@ -23,6 +26,7 @@ const SearchPlato = ({navigation}) => {
             console.error('Error fetching recipes:', error);
             throw error;
         }
+    }
     }
 
     return (

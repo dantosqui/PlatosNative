@@ -1,21 +1,20 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import PlatoCard from '../../components/PlatoCard/PlatoCard.jsx';
-import { View, FlatList, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, FlatList, StyleSheet,TouchableOpacity,Text } from 'react-native';
 import BotonCircular from '../../components/BotonCircular/BotonCircular.jsx';
 import { useContext } from 'react';
 import { MenuContext } from '../../context/menuContext.js';
 
 const Home = ({navigation}) => { //home home again i like to be here when i can
 
-    const { platos } = useContext(MenuContext);
-    useEffect(() => {
-        console.log(platos)
-
-    }, [platos]);
+    const { platos, promedios } = useContext(MenuContext);
+    
 
     return (
         <View style={styles.container}>
+            {promedios.promedioHealthScore >= 0 ? (<Text>Promedio de HealthScore: {promedios.promedioHealthScore}</Text>) : (<></>) }
+            {promedios.precioTotal > 0 ? (<Text>Precio total: {promedios.precioTotal}</Text>) : (<></>) }
             <FlatList
                 data={platos}
                 keyExtractor={(item) => item.id.toString()}
