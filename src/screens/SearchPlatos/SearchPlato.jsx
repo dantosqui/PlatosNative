@@ -51,7 +51,7 @@ const SearchPlato = ({navigation}) => {
                     <TouchableOpacity 
                         onPress={() => navigation.navigate('Detalle', { platoId: item.id })} // Use an arrow function here
                     >
-                        <PlatoCard title={item.title} image={item.image} />
+                        <PlatoCard title={item.title} image={item.image} id={item.id} />
                     </TouchableOpacity>
                 )}
             />

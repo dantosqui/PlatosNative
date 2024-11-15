@@ -1,7 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { MAX_PLATOS } from '../constantes/constantes';
-
+import axios from 'axios';
 export const MenuContext = createContext();
+import { API_KEY } from '../constantes/constantes';
 
 export const MenuProvider = ({ children }) => {
    
@@ -51,10 +52,21 @@ export const MenuProvider = ({ children }) => {
     const sacarPlato = (id) => {
         setPlatos(platos.filter(plato => plato.id !== id));
     };
-    const addPlato = (plato) => {
-        //validamos aca porque sino tengo que importar una banda de cosas
+    const addPlato = async (platoId) => {
         
-        setPlatos([...platos, plato]);
+        try{
+            const plato = await axios.get(`https://api.spoonacular.com/recipes/${platoId}/information`,{
+                params:{
+                    includeNutrition:true,
+                    apiKey:API_KEY
+                }
+            })
+            setPlatos([...platos, plato.data]);
+            console.log("plato",platos)
+        }  catch (error){
+            console.error('error fecheando un plato: ',error)
+            throw error
+        }
     };
     
     return (

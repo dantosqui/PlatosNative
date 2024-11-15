@@ -1,14 +1,24 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, Image, StyleSheet, useAnimatedValue } from 'react-native';
+import BotonCircular from "../BotonCircular/BotonCircular"
+import { MenuContext } from '../../context/menuContext';
 
-const Card = ({ title, image, description }) => {
+import { useNavigation } from '@react-navigation/native';
+
+const Card = ({ title, image, description,id }) => {
+  const {addPlato, exists,sacarPlato} = useContext(MenuContext)
+  const nav=useNavigation()
   return (
     <View style={styles.card}>
       <Image source={{ uri: image }} style={styles.image} />
       <View style={styles.content}>
-        <Text>texto</Text>
+        <Text>rica receta</Text>
         <Text style={styles.title}>{title}</Text>
-        
+        {exists(id) ? (
+          <BotonCircular onPress={() => {sacarPlato(id);nav.navigate("Home")}} icon={"-"}></BotonCircular> ):(
+          <BotonCircular onPress={() => {addPlato(id);nav.navigate("Home")}} icon={"+"}></BotonCircular>
+          )
+        }
       </View>
     </View>
   );

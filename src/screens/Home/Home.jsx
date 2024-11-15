@@ -10,7 +10,7 @@ const Home = ({navigation}) => { //home home again i like to be here when i can
 
     const { platos, promedios } = useContext(MenuContext);
     
-
+    
     return (
         <View style={styles.container}>
             {promedios.promedioHealthScore >= 0 ? (<Text>Promedio de HealthScore: {promedios.promedioHealthScore}</Text>) : (<></>) }
@@ -22,12 +22,12 @@ const Home = ({navigation}) => { //home home again i like to be here when i can
                     <TouchableOpacity 
                         onPress={() => navigation.navigate('Detalle', { platoId: item.id })} // 
                     >
-                        <PlatoCard title={item.title} image={item.image} />
+                        <PlatoCard title={item.title} image={item.image} id={item.id} />
                     </TouchableOpacity>
                 )}
             />
 
-            <BotonCircular onPress={() => navigation.navigate('Buscar')} />
+            <BotonCircular icon={"+"} onPress={() => navigation.navigate('Buscar')} />
         </View>
     );
 };
