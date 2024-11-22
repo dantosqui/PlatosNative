@@ -62,7 +62,7 @@ export const MenuProvider = ({ children }) => {
                 }
             })
             setPlatos([...platos, plato.data]);
-            console.log("plato",platos)
+           
         }  catch (error){
             console.error('error fecheando un plato: ',error)
             throw error

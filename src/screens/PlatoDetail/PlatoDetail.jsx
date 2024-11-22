@@ -41,7 +41,7 @@ const PlatoDetail = ({navigation}) => {
         navigation.navigate('Home')
     }
     const canAñadirAlMenu = () => {//si ya hay 4 platos no se puede añadir, si hay ya 50 porciento de veganos y es vegano no se puede añadir y viseversa
-        console.log(veganPercentages)
+        
         if(!maxPlatosReached){
             if(infoPlato.vegan){
                 if(veganPercentages.vegan<50){
